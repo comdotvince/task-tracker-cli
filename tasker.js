@@ -3,7 +3,7 @@ const process = require('process');
 const fs = require('fs');
 
 const command = process.argv[2];
-const storage = 'tasks.json';
+const storage = 'data.json';
 
 function addTask() {
   const timestamp = new Date();
@@ -44,12 +44,6 @@ function addTask() {
     })
   })
 }
-
-
-function listTask() {
-
-}
-
 
 function main() {
   switch(command) {
