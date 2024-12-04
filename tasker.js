@@ -5,6 +5,30 @@ const fs = require('fs');
 const command = process.argv[2];
 const storage = 'data.json';
 
+
+// sync function that read file and return the array
+function read() {
+  try {
+    const data = fs.readFileSync(storage, 'utf-8');
+    if (!data) return [];
+    return JSON.parse(data);
+    
+  } catch (err) {
+    console.error("Error reading file:", err);
+  }
+}
+
+function write(jsonData) {
+  try {
+    fs.writeFileSync(storage, JSON.stringify(jsonData, null, 2), 'utf-8');
+
+  } catch (err) {
+    console.error("Error writing file:", err);
+  }
+}
+
+
+// function to write file
 function addTask() {
   const timestamp = new Date();
   const description = process.argv[3];
@@ -14,35 +38,18 @@ function addTask() {
     description: description,
     createdAt: timestamp
   }
-
-  fs.readFile(storage, 'utf-8', (err, data) => {
-    if (err) {
-      console.error("error", err);
-      return;
-    }
-
-    let jsonData = [];
-    // get the data from storage
-    if(!data) {
-      console.log("empty");
-    } else {
-      jsonData = JSON.parse(data);
-    }
-  
+    let data = read();
     // update the id of each task
-    task.id += jsonData.length;
+    task.id += data.length;
 
     // add current task to the jsonData array
-    jsonData.push(task);
+    data.push(task);
 
-    fs.writeFile(storage, JSON.stringify(jsonData, null, 2), 'utf-8', (err) => {
-      console.log("success");
-      if (err) {
-        console.err("Error", err)
-        return;
-      }
-    })
-  })
+    console.log(data);
+
+    write(data);
+
+  
 }
 
 function main() {
