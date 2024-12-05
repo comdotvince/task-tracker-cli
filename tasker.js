@@ -6,6 +6,12 @@ const { time } = require('console');
 const command = process.argv[2];
 const updateId = process.argv[3];
 const updateDes = process.argv[4];
+
+const deleteId = process.argv[3];
+
+const markTask = process.argv[2];
+const markId = process.argv[3];
+
 const storage = 'data.json';
 
 
@@ -21,7 +27,7 @@ function readStorage() {
   }
 }
 
-function write(jsonData) {
+function writeStorage(jsonData) {
   try {
     fs.writeFileSync(storage, JSON.stringify(jsonData, null, 2), 'utf-8');
 
@@ -39,6 +45,7 @@ function addTask() {
   const task = {
     id: 1,
     description: description,
+    status: "todo",
     createdAt: timestamp,
     updatedAt: timestamp
   }
@@ -51,7 +58,7 @@ function addTask() {
 
     console.log(data);
 
-    write(data);
+    writeStorage(data);
 
   
 }
@@ -77,7 +84,42 @@ function updateTask() {
 
     }
   })
-  write(newData);
+  writeStorage(newData);
+}
+
+function deleteTask() {
+  let data = readStorage();
+  let newData = [];
+
+  data.forEach(function (element) {
+    if (deleteId != element.id) {
+      newData.push(element);
+    }
+  })
+  writeStorage(newData);
+}
+
+
+function markInProgress() {
+  let data = readStorage();
+  let newData = [];
+
+  data.forEach(function (element) {
+    if (markId == element.id) {
+      const updatedTask = {
+        id: element.id,
+        description: element.description,
+        status: "in-progress",
+        createdAt: element.createdAt,
+        updatedAt: new Date()
+      }
+      newData.push(updatedTask);
+
+    } else {
+      newData.push(element);
+    }
+  })
+  writeStorage(newData);
 }
 
 function main() {
@@ -98,6 +140,13 @@ function main() {
       updateTask();
       break;
     
+    case 'delete':
+      deleteTask();
+      break;
+
+    case 'mark-in-progress':
+      markInProgress();
+      break;
   }
 }
 
