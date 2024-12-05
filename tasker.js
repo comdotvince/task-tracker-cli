@@ -1,13 +1,16 @@
 const { type } = require('os');
 const process = require('process');
 const fs = require('fs');
+const { time } = require('console');
 
 const command = process.argv[2];
+const updateId = process.argv[3];
+const updateDes = process.argv[4];
 const storage = 'data.json';
 
 
 // sync function that read file and return the array
-function read() {
+function readStorage() {
   try {
     const data = fs.readFileSync(storage, 'utf-8');
     if (!data) return [];
@@ -36,9 +39,10 @@ function addTask() {
   const task = {
     id: 1,
     description: description,
-    createdAt: timestamp
+    createdAt: timestamp,
+    updatedAt: timestamp
   }
-    let data = read();
+    let data = readStorage();
     // update the id of each task
     task.id += data.length;
 
@@ -50,6 +54,30 @@ function addTask() {
     write(data);
 
   
+}
+
+function updateTask() {
+  let data = readStorage();
+  let newData = [];
+
+  data.forEach(function (element) {
+    console.log(element.id);
+
+    if (updateId == element.id) {
+      const updatedTask = {
+        id: element.id,
+        description: updateDes,
+        createdAt: element.createdAt,
+        updatedAt: new Date()
+      }
+
+      newData.push(updatedTask);
+    } else {
+      newData.push(element);
+
+    }
+  })
+  write(newData);
 }
 
 function main() {
@@ -64,6 +92,10 @@ function main() {
     
     case 'add':
       addTask();
+      break;
+    
+    case 'update':
+      updateTask();
       break;
     
   }

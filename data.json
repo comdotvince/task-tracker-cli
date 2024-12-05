@@ -1,22 +1,14 @@
 [
   {
     "id": 1,
-    "description": "watch tv",
-    "createdAt": "2024-12-04T05:58:32.644Z"
+    "description": "upated me",
+    "createdAt": "2024-12-05T01:06:30.269Z",
+    "updatedAt": "2024-12-05T01:10:12.764Z"
   },
   {
     "id": 2,
-    "description": "wash clothes",
-    "createdAt": "2024-12-04T05:58:46.461Z"
-  },
-  {
-    "id": 3,
-    "description": "wash clothes",
-    "createdAt": "2024-12-04T05:59:20.819Z"
-  },
-  {
-    "id": 4,
-    "description": "wash clothes",
-    "createdAt": "2024-12-04T05:59:22.265Z"
+    "description": "hit the gym",
+    "createdAt": "2024-12-05T01:10:37.509Z",
+    "updatedAt": "2024-12-05T01:11:13.208Z"
   }
 ]
