@@ -4,13 +4,15 @@ const fs = require('fs');
 const { time } = require('console');
 
 const command = process.argv[2];
+
 const updateId = process.argv[3];
 const updateDes = process.argv[4];
 
 const deleteId = process.argv[3];
 
-const markTask = process.argv[2];
+const listStatus = process.argv[3];
 const markId = process.argv[3];
+
 
 const storage = 'data.json';
 
@@ -35,7 +37,6 @@ function writeStorage(jsonData) {
     console.error("Error writing file:", err);
   }
 }
-
 
 // function to write file
 function addTask() {
@@ -122,6 +123,69 @@ function markInProgress() {
   writeStorage(newData);
 }
 
+function markDone() {
+  let data = readStorage();
+  let newData = [];
+  data.forEach(function (element) {
+    if (markId == element.id) {
+      const updatedTask = {
+        id: element.id,
+        description: element.description,
+        status: "done",
+        createdAt: element.createdAt,
+        updatedAt: new Date()
+      }
+      newData.push(updatedTask);
+
+    } else {
+      newData.push(element);
+    }
+  })
+  writeStorage(newData);
+
+}
+
+function markTodo() {
+  let data = readStorage();
+  let newData = [];
+  data.forEach(function (element) {
+    if (markId == element.id) {
+      const updatedTask = {
+        id: element.id,
+        description: element.description,
+        status: "to-do",
+        createdAt: element.createdAt,
+        updatedAt: new Date()
+      }
+      newData.push(updatedTask);
+
+    } else {
+      newData.push(element);
+    }
+  })
+  writeStorage(newData);
+}
+
+
+function listTask() {
+  let data = readStorage();
+
+  data.forEach( function (element) {
+    console.log(element.description);
+  })
+}
+
+function listByStatus() {
+  let data = readStorage();
+  data.forEach(function (element) {
+    if (element.status == listStatus) {
+      console.log(element.description);
+    } else {
+      return;
+    }
+  })
+}
+
 function main() {
   switch(command) {
     case 'help':
@@ -129,7 +193,12 @@ function main() {
       break;
     
     case 'list':
-      listTask();
+      if (listStatus) {
+        listByStatus();
+      } else {
+        listTask();
+      }
+      
       break;
     
     case 'add':
@@ -147,6 +216,16 @@ function main() {
     case 'mark-in-progress':
       markInProgress();
       break;
+    
+    case 'mark-done':
+      markDone();
+      break;
+    
+    case 'mark-to-do':
+      markTodo();
+      break;
+    
+
   }
 }
 
