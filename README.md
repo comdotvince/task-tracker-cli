@@ -1,6 +1,7 @@
 # task-tracker-cli
 
 Task tracker is a project used to track and manage your tasks in command line using nodejs.
+https://roadmap.sh/projects/task-tracker
 
 ## how to run
 1. clone the repo
@@ -8,19 +9,19 @@ Task tracker is a project used to track and manage your tasks in command line us
 
 ### example 
 ```
-// Adding a new task
+# Adding a new task
 node tasker.js add "Buy groceries"
-// Output: Task added successfully (ID: 1)
+# Output: Task added successfully (ID: 1)
 
-// Updating and deleting tasks
+# Updating and deleting tasks
 node tasker.js update 1 "Buy groceries and cook dinner"
 node tasker.js delete 1
 
-// Marking a task as in progress or done
+# Marking a task as in progress or done
 node tasker.js mark-in-progress 1
 node tasker.js mark-done 1
 
-// Listing all tasks
+# Listing all tasks
 node tasker.js list
 
 # Listing tasks by status

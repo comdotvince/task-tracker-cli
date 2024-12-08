@@ -57,7 +57,7 @@ function addTask() {
     // add current task to the jsonData array
     data.push(task);
 
-    console.log(data);
+    console.log("Task added successfully (ID:"+task.id+")");
 
     writeStorage(data);
 
